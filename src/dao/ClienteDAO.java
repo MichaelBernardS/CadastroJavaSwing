@@ -7,8 +7,8 @@ import javax.swing.JOptionPane;
 import controle.Cliente;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Vector;
 import utilitário.Conectar;
+import static validacaocpfcnpj.ValidaCPF.imprimeCPF;
 
 public class ClienteDAO {
 
@@ -17,7 +17,8 @@ public class ClienteDAO {
         String sql = "INSERT INTO cliente (nome, cpfcnpj, endereco) VALUES (?,?,?) ";
         try (PreparedStatement smt = con.prepareStatement(sql)) {
             smt.setString(1, c.getNome());
-            smt.setString(2, c.getCpfcnpj());
+            smt.setString(2, imprimeCPF(c.getCpfcnpj()));
+            
             smt.setString(3, c.getEndereco());
             smt.executeUpdate();
             smt.close();
@@ -35,7 +36,7 @@ public class ClienteDAO {
                 + "WHERE id = ? ";
         try (PreparedStatement smt = con.prepareStatement(sql)) {
             smt.setString(1, c.getNome());
-            smt.setString(2, c.getCpfcnpj());
+            smt.setString(2, imprimeCPF(c.getCpfcnpj()));
             smt.setString(3, c.getEndereco());
             smt.setInt(4, c.getId());
             smt.executeUpdate();

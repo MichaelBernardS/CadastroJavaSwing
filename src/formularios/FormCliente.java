@@ -5,7 +5,6 @@ import dao.ClienteDAO;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.JTabbedPane;
 import validacaocpfcnpj.ValidaCPF;
 
 public class FormCliente extends javax.swing.JFrame {
@@ -160,7 +159,7 @@ public class FormCliente extends javax.swing.JFrame {
         jLabel4.setText("CPF/CNPJ:");
 
         try {
-            jFcpfcnpj.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("###.###.###-##")));
+            jFcpfcnpj.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("###########")));
         } catch (java.text.ParseException ex) {
             ex.printStackTrace();
         }
@@ -350,13 +349,9 @@ public class FormCliente extends javax.swing.JFrame {
         }
         c.setNome(jTnome.getText());
         c.setCpfcnpj(jFcpfcnpj.getText());
-        String cpf = jFcpfcnpj.getText();
-        
-        if (ValidaCPF.isCPF(cpf) == true) {
-               System.out.printf("%s\n", ValidaCPF.imprimeCPF(cpf)); }
-        else { System.out.printf("Erro, CPF invalido !!!\n");
-            }
         c.setEndereco(jTendereco.getText());
+        
+        if (ValidaCPF.isCPF(jFcpfcnpj.getText()) == true) {
         cdao.saveOrUpdate(c);
         preencherTabela();
         jTabbedPane1.setSelectedIndex(0);
@@ -364,6 +359,8 @@ public class FormCliente extends javax.swing.JFrame {
         jTnome.setText("");
         jFcpfcnpj.setText("");
         jTendereco.setText("");
+        } else { JOptionPane.showMessageDialog(rootPane, "CPF inválido!");
+            }
     }//GEN-LAST:event_jBsalvarActionPerformed
 
     public void preencherTabela() {
@@ -400,7 +397,7 @@ public class FormCliente extends javax.swing.JFrame {
             if (opcao >= 0) {
                 jTid.setText(jTcliente.getValueAt(opcao, 0).toString());
                 jTnome.setText(jTcliente.getValueAt(opcao, 1).toString());
-                jFcpfcnpj.setText(jTcliente.getValueAt(opcao, 2).toString());
+                jFcpfcnpj.setText((jTcliente.getValueAt(opcao, 2).toString().substring(0,3) + jTcliente.getValueAt(opcao, 2).toString().substring(4,7) + jTcliente.getValueAt(opcao, 2).toString().substring(8,11) + jTcliente.getValueAt(opcao, 2).toString().substring(12,14)));
                 jTendereco.setText(jTcliente.getValueAt(opcao, 3).toString());
                 jTabbedPane1.setSelectedIndex(1);
             }
