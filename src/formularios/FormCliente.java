@@ -19,7 +19,6 @@ public class FormCliente extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        buttonGroup1 = new javax.swing.ButtonGroup();
         jTabbedPane1 = new javax.swing.JTabbedPane();
         jPanel3 = new javax.swing.JPanel();
         jLabel7 = new javax.swing.JLabel();
@@ -191,10 +190,13 @@ public class FormCliente extends javax.swing.JFrame {
 
         jPanel4.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
-        buttonGroup1.add(campoCPF);
         campoCPF.setText("CPF");
+        campoCPF.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                campoCPFActionPerformed(evt);
+            }
+        });
 
-        buttonGroup1.add(campoCNPJ);
         campoCNPJ.setText("CNPJ");
         campoCNPJ.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -350,17 +352,20 @@ public class FormCliente extends javax.swing.JFrame {
         c.setNome(jTnome.getText());
         c.setCpfcnpj(jFcpfcnpj.getText());
         c.setEndereco(jTendereco.getText());
-        
+
         if (ValidaCPF.isCPF(jFcpfcnpj.getText()) == true) {
-        cdao.saveOrUpdate(c);
-        preencherTabela();
-        jTabbedPane1.setSelectedIndex(0);
-        jTid.setText("");
-        jTnome.setText("");
-        jFcpfcnpj.setText("");
-        jTendereco.setText("");
-        } else { JOptionPane.showMessageDialog(rootPane, "CPF inválido!");
-            }
+            cdao.saveOrUpdate(c);
+            preencherTabela();
+            jTabbedPane1.setSelectedIndex(0);
+            jTid.setText("");
+            jTnome.setText("");
+            campoCPF.setSelected(false);
+            campoCNPJ.setSelected(false);
+            jFcpfcnpj.setText("");
+            jTendereco.setText("");
+        } else {
+            JOptionPane.showMessageDialog(rootPane, "CPF inválido!");
+        }
     }//GEN-LAST:event_jBsalvarActionPerformed
 
     public void preencherTabela() {
@@ -380,6 +385,8 @@ public class FormCliente extends javax.swing.JFrame {
     private void jBcancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBcancelarActionPerformed
         jTid.setText("");
         jTnome.setText("");
+        campoCPF.setSelected(false);
+        campoCNPJ.setSelected(false);
         jFcpfcnpj.setText("");
         jTendereco.setText("");
         jTabbedPane1.setSelectedIndex(0);
@@ -397,7 +404,7 @@ public class FormCliente extends javax.swing.JFrame {
             if (opcao >= 0) {
                 jTid.setText(jTcliente.getValueAt(opcao, 0).toString());
                 jTnome.setText(jTcliente.getValueAt(opcao, 1).toString());
-                jFcpfcnpj.setText((jTcliente.getValueAt(opcao, 2).toString().substring(0,3) + jTcliente.getValueAt(opcao, 2).toString().substring(4,7) + jTcliente.getValueAt(opcao, 2).toString().substring(8,11) + jTcliente.getValueAt(opcao, 2).toString().substring(12,14)));
+                jFcpfcnpj.setText((jTcliente.getValueAt(opcao, 2).toString().substring(0, 3) + jTcliente.getValueAt(opcao, 2).toString().substring(4, 7) + jTcliente.getValueAt(opcao, 2).toString().substring(8, 11) + jTcliente.getValueAt(opcao, 2).toString().substring(12, 14)));
                 jTendereco.setText(jTcliente.getValueAt(opcao, 3).toString());
                 jTabbedPane1.setSelectedIndex(1);
             }
@@ -405,12 +412,20 @@ public class FormCliente extends javax.swing.JFrame {
     }//GEN-LAST:event_jTclienteMouseClicked
 
     private void campoCNPJMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_campoCNPJMouseClicked
-
+        if (campoCNPJ.isSelected()) {
+            campoCPF.setSelected(false);
+        }
     }//GEN-LAST:event_campoCNPJMouseClicked
 
     private void jFcpfcnpjActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jFcpfcnpjActionPerformed
 
     }//GEN-LAST:event_jFcpfcnpjActionPerformed
+
+    private void campoCPFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_campoCPFActionPerformed
+        if (campoCPF.isSelected()) {
+            campoCNPJ.setSelected(false);
+        }
+    }//GEN-LAST:event_campoCPFActionPerformed
 
     /**
      * @param args the command line arguments
@@ -424,7 +439,6 @@ public class FormCliente extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JRadioButton campoCNPJ;
     private javax.swing.JRadioButton campoCPF;
     private javax.swing.JButton jBcancelar;
