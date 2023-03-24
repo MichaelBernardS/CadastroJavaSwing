@@ -41,7 +41,12 @@ public class ClienteDAO {
                 + "WHERE id = ? ";
         try (PreparedStatement smt = con.prepareStatement(sql)) {
             smt.setString(1, c.getNome());
+            if (c.getCpfcnpj().length() <= 11) {
             smt.setString(2, imprimeCPF(c.getCpfcnpj()));
+            }
+            if (c.getCpfcnpj().length() >= 12) {
+                smt.setString(2, imprimeCNPJ(c.getCpfcnpj()));
+            }
             smt.setString(3, c.getEndereco());
             smt.setInt(4, c.getId());
             smt.executeUpdate();
