@@ -30,7 +30,7 @@ public class ClienteDAO {
             con.close();
             JOptionPane.showMessageDialog(null, "Cadastrado com sucesso!");
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(null, "CPF repetido!");
+            JOptionPane.showMessageDialog(null, "CPF/CNPJ repetido!");
         }
     }
 
@@ -70,7 +70,7 @@ public class ClienteDAO {
         Connection con = Conectar.getConectar();
         String sql = "DELETE FROM cliente WHERE id = ? ";
         int opcao = JOptionPane.showConfirmDialog(null, "Confirma a exclusão do cliente "
-                + c.getNome() + "?", "Excluir", JOptionPane.YES_NO_OPTION);
+                + c.getNome() + "?", "Exclusão de um cliente", JOptionPane.YES_NO_OPTION);
         if (opcao == JOptionPane.YES_OPTION) {
             try (PreparedStatement smt = con.prepareStatement(sql)) {
                 smt.setInt(1, c.getId());
