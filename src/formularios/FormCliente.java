@@ -5,6 +5,7 @@ import dao.ClienteDAO;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import validacaocpfcnpj.ValidaCNPJ;
 import validacaocpfcnpj.ValidaCPF;
 
 public class FormCliente extends javax.swing.JFrame {
@@ -157,11 +158,6 @@ public class FormCliente extends javax.swing.JFrame {
         jLabel4.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
         jLabel4.setText("CPF/CNPJ:");
 
-        try {
-            jFcpfcnpj.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("###########")));
-        } catch (java.text.ParseException ex) {
-            ex.printStackTrace();
-        }
         jFcpfcnpj.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jFcpfcnpjActionPerformed(evt);
@@ -262,7 +258,7 @@ public class FormCliente extends javax.swing.JFrame {
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jFcpfcnpj, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addContainerGap(505, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jTendereco, javax.swing.GroupLayout.Alignment.LEADING)
@@ -352,7 +348,7 @@ public class FormCliente extends javax.swing.JFrame {
         c.setNome(jTnome.getText());
         c.setCpfcnpj(jFcpfcnpj.getText());
         c.setEndereco(jTendereco.getText());
-
+        if (jFcpfcnpj.getText().length() <= 11 ) {
         if (ValidaCPF.isCPF(jFcpfcnpj.getText()) == true) {
             cdao.saveOrUpdate(c);
             preencherTabela();
@@ -365,6 +361,24 @@ public class FormCliente extends javax.swing.JFrame {
             jTendereco.setText("");
         } else {
             JOptionPane.showMessageDialog(rootPane, "CPF inválido!");
+        }
+        }
+        
+        if (jFcpfcnpj.getText().length() >= 12 ) {
+        if (ValidaCNPJ.isCNPJ(jFcpfcnpj.getText()) == true) {
+            cdao.saveOrUpdate(c);
+            preencherTabela();
+            jTabbedPane1.setSelectedIndex(0);
+            jTid.setText("");
+            jTnome.setText("");
+            campoCPF.setSelected(false);
+            campoCNPJ.setSelected(false);
+            jFcpfcnpj.setText("");
+            jTendereco.setText("");
+        }
+        else {
+            JOptionPane.showMessageDialog(rootPane, "CNPJ inválido!");
+        }
         }
     }//GEN-LAST:event_jBsalvarActionPerformed
 
@@ -404,7 +418,12 @@ public class FormCliente extends javax.swing.JFrame {
             if (opcao >= 0) {
                 jTid.setText(jTcliente.getValueAt(opcao, 0).toString());
                 jTnome.setText(jTcliente.getValueAt(opcao, 1).toString());
+                if (jTcliente.getValueAt(opcao, 2).toString().length() <= 14) {
                 jFcpfcnpj.setText((jTcliente.getValueAt(opcao, 2).toString().substring(0, 3) + jTcliente.getValueAt(opcao, 2).toString().substring(4, 7) + jTcliente.getValueAt(opcao, 2).toString().substring(8, 11) + jTcliente.getValueAt(opcao, 2).toString().substring(12, 14)));
+                }
+                if (jTcliente.getValueAt(opcao, 2).toString().length() >= 15) {
+                jFcpfcnpj.setText((jTcliente.getValueAt(opcao, 2).toString().substring(0, 2) + jTcliente.getValueAt(opcao, 2).toString().substring(3, 6) + jTcliente.getValueAt(opcao, 2).toString().substring(7, 10) + jTcliente.getValueAt(opcao, 2).toString().substring(11, 15) + jTcliente.getValueAt(opcao, 2).toString().substring(16, 18)));
+                }
                 jTendereco.setText(jTcliente.getValueAt(opcao, 3).toString());
                 jTabbedPane1.setSelectedIndex(1);
             }
@@ -417,15 +436,15 @@ public class FormCliente extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_campoCNPJMouseClicked
 
-    private void jFcpfcnpjActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jFcpfcnpjActionPerformed
-
-    }//GEN-LAST:event_jFcpfcnpjActionPerformed
-
     private void campoCPFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_campoCPFActionPerformed
         if (campoCPF.isSelected()) {
             campoCNPJ.setSelected(false);
         }
     }//GEN-LAST:event_campoCPFActionPerformed
+
+    private void jFcpfcnpjActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jFcpfcnpjActionPerformed
+
+    }//GEN-LAST:event_jFcpfcnpjActionPerformed
 
     /**
      * @param args the command line arguments

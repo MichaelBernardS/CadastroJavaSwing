@@ -8,6 +8,7 @@ import controle.Cliente;
 import java.util.ArrayList;
 import java.util.List;
 import utilitário.Conectar;
+import static validacaocpfcnpj.ValidaCNPJ.imprimeCNPJ;
 import static validacaocpfcnpj.ValidaCPF.imprimeCPF;
 
 public class ClienteDAO {
@@ -17,8 +18,12 @@ public class ClienteDAO {
         String sql = "INSERT INTO cliente (nome, cpfcnpj, endereco) VALUES (?,?,?) ";
         try (PreparedStatement smt = con.prepareStatement(sql)) {
             smt.setString(1, c.getNome());
+            if (c.getCpfcnpj().length() <= 11) {
             smt.setString(2, imprimeCPF(c.getCpfcnpj()));
-            
+            }
+            if (c.getCpfcnpj().length() >= 12) {
+                smt.setString(2, imprimeCNPJ(c.getCpfcnpj()));
+            }
             smt.setString(3, c.getEndereco());
             smt.executeUpdate();
             smt.close();
@@ -59,7 +64,7 @@ public class ClienteDAO {
     public void excluir(Cliente c) {
         Connection con = Conectar.getConectar();
         String sql = "DELETE FROM cliente WHERE id = ? ";
-        int opcao = JOptionPane.showConfirmDialog(null, "Deseja excluir o cliente "
+        int opcao = JOptionPane.showConfirmDialog(null, "Confirma a exclusão do cliente "
                 + c.getNome() + "?", "Excluir", JOptionPane.YES_NO_OPTION);
         if (opcao == JOptionPane.YES_OPTION) {
             try (PreparedStatement smt = con.prepareStatement(sql)) {
