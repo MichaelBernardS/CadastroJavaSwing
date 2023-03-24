@@ -1,0 +1,10 @@
+create database cadastro
+
+use cadastro
+
+create table cliente(
+	id INT PRIMARY KEY AUTO_INCREMENT,
+	nome VARCHAR(30) NOT NULL,
+	cpfcnpj VARCHAR(18) UNIQUE,
+	endereco VARCHAR(100) NOT NULL
+	);
