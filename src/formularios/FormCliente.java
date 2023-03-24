@@ -31,15 +31,15 @@ public class FormCliente extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
+        jid = new javax.swing.JLabel();
         jTid = new javax.swing.JTextField();
-        jLabel3 = new javax.swing.JLabel();
+        jnome = new javax.swing.JLabel();
         jTnome = new javax.swing.JTextField();
-        jLabel4 = new javax.swing.JLabel();
+        jcpfcnpj = new javax.swing.JLabel();
         jFcpfcnpj = new javax.swing.JFormattedTextField();
-        jLabel5 = new javax.swing.JLabel();
+        jendereco = new javax.swing.JLabel();
         jTendereco = new javax.swing.JTextField();
-        jLabel6 = new javax.swing.JLabel();
+        jtipo = new javax.swing.JLabel();
         jBsalvar = new javax.swing.JButton();
         jBexcluir = new javax.swing.JButton();
         jPanel4 = new javax.swing.JPanel();
@@ -142,8 +142,8 @@ public class FormCliente extends javax.swing.JFrame {
             .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 34, Short.MAX_VALUE)
         );
 
-        jLabel2.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
-        jLabel2.setText("ID:");
+        jid.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
+        jid.setText("ID:");
 
         jTid.setEditable(false);
         jTid.addActionListener(new java.awt.event.ActionListener() {
@@ -152,11 +152,11 @@ public class FormCliente extends javax.swing.JFrame {
             }
         });
 
-        jLabel3.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
-        jLabel3.setText("Nome:");
+        jnome.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
+        jnome.setText("Nome:");
 
-        jLabel4.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
-        jLabel4.setText("CPF/CNPJ:");
+        jcpfcnpj.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
+        jcpfcnpj.setText("CPF/CNPJ:");
 
         jFcpfcnpj.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -164,11 +164,11 @@ public class FormCliente extends javax.swing.JFrame {
             }
         });
 
-        jLabel5.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
-        jLabel5.setText("Endereço:");
+        jendereco.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
+        jendereco.setText("Endereço:");
 
-        jLabel6.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
-        jLabel6.setText("Tipo:");
+        jtipo.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
+        jtipo.setText("Tipo:");
 
         jBsalvar.setText("Gravar");
         jBsalvar.addActionListener(new java.awt.event.ActionListener() {
@@ -243,15 +243,15 @@ public class FormCliente extends javax.swing.JFrame {
                 .addContainerGap(248, Short.MAX_VALUE))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel4)
+                    .addComponent(jcpfcnpj)
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGap(33, 33, 33)
-                                .addComponent(jLabel3))
-                            .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.TRAILING))
-                        .addComponent(jLabel6, javax.swing.GroupLayout.Alignment.TRAILING))
-                    .addComponent(jLabel5))
+                                .addComponent(jnome))
+                            .addComponent(jid, javax.swing.GroupLayout.Alignment.TRAILING))
+                        .addComponent(jtipo, javax.swing.GroupLayout.Alignment.TRAILING))
+                    .addComponent(jendereco))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
@@ -275,26 +275,26 @@ public class FormCliente extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jTid, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel2))
+                    .addComponent(jid))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jTnome, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel3))
+                    .addComponent(jnome))
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(26, 26, 26)
-                        .addComponent(jLabel6)))
+                        .addComponent(jtipo)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jFcpfcnpj, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel4))
+                    .addComponent(jcpfcnpj))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jTendereco, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel5))
+                    .addComponent(jendereco))
                 .addGap(38, 38, 38)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jBcancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -357,6 +357,7 @@ public class FormCliente extends javax.swing.JFrame {
             jTnome.setText("");
             campoCPF.setSelected(false);
             campoCNPJ.setSelected(false);
+            jcpfcnpj.setText("CPF/CNPJ:");
             jFcpfcnpj.setText("");
             jTendereco.setText("");
         } else {
@@ -373,6 +374,7 @@ public class FormCliente extends javax.swing.JFrame {
             jTnome.setText("");
             campoCPF.setSelected(false);
             campoCNPJ.setSelected(false);
+            jcpfcnpj.setText("CPF/CNPJ:");
             jFcpfcnpj.setText("");
             jTendereco.setText("");
         }
@@ -401,6 +403,7 @@ public class FormCliente extends javax.swing.JFrame {
         jTnome.setText("");
         campoCPF.setSelected(false);
         campoCNPJ.setSelected(false);
+        jcpfcnpj.setText("CPF/CNPJ:");
         jFcpfcnpj.setText("");
         jTendereco.setText("");
         jTabbedPane1.setSelectedIndex(0);
@@ -419,9 +422,13 @@ public class FormCliente extends javax.swing.JFrame {
                 jTid.setText(jTcliente.getValueAt(opcao, 0).toString());
                 jTnome.setText(jTcliente.getValueAt(opcao, 1).toString());
                 if (jTcliente.getValueAt(opcao, 2).toString().length() <= 14) {
+                    jcpfcnpj.setText("CPF:");
+                    campoCPF.setSelected(true);
                 jFcpfcnpj.setText((jTcliente.getValueAt(opcao, 2).toString().substring(0, 3) + jTcliente.getValueAt(opcao, 2).toString().substring(4, 7) + jTcliente.getValueAt(opcao, 2).toString().substring(8, 11) + jTcliente.getValueAt(opcao, 2).toString().substring(12, 14)));
                 }
                 if (jTcliente.getValueAt(opcao, 2).toString().length() >= 15) {
+                    jcpfcnpj.setText("CNPJ:");
+                    campoCNPJ.setSelected(true);
                 jFcpfcnpj.setText((jTcliente.getValueAt(opcao, 2).toString().substring(0, 2) + jTcliente.getValueAt(opcao, 2).toString().substring(3, 6) + jTcliente.getValueAt(opcao, 2).toString().substring(7, 10) + jTcliente.getValueAt(opcao, 2).toString().substring(11, 15) + jTcliente.getValueAt(opcao, 2).toString().substring(16, 18)));
                 }
                 jTendereco.setText(jTcliente.getValueAt(opcao, 3).toString());
@@ -433,12 +440,14 @@ public class FormCliente extends javax.swing.JFrame {
     private void campoCNPJMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_campoCNPJMouseClicked
         if (campoCNPJ.isSelected()) {
             campoCPF.setSelected(false);
+            jcpfcnpj.setText("CNPJ:");
         }
     }//GEN-LAST:event_campoCNPJMouseClicked
 
     private void campoCPFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_campoCPFActionPerformed
         if (campoCPF.isSelected()) {
             campoCNPJ.setSelected(false);
+            jcpfcnpj.setText("CPF:");
         }
     }//GEN-LAST:event_campoCPFActionPerformed
 
@@ -466,11 +475,6 @@ public class FormCliente extends javax.swing.JFrame {
     private javax.swing.JButton jBsalvar;
     private javax.swing.JFormattedTextField jFcpfcnpj;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
@@ -483,6 +487,11 @@ public class FormCliente extends javax.swing.JFrame {
     private javax.swing.JTextField jTendereco;
     private javax.swing.JTextField jTid;
     private javax.swing.JTextField jTnome;
+    private javax.swing.JLabel jcpfcnpj;
+    private javax.swing.JLabel jendereco;
+    private javax.swing.JLabel jid;
+    private javax.swing.JLabel jnome;
+    private javax.swing.JLabel jtipo;
     private javax.swing.JTextField pesquisaNome;
     // End of variables declaration//GEN-END:variables
 }

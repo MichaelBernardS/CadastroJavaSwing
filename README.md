@@ -1,3 +1,2 @@
 # CadastroClientesJavaSwing
-Projeto EM DESENVOLVIMENTO da empresa Union Data, para a criação de uma tela de cadastro de clientes.
-Muitos ajustes deverão acontecer, como validação de CPF, muitas exceções personalizadas e tratamentos dentro do código.
+Projeto em finalização feito para a empresa Union Data, a fim de criar uma tela de cadastro de clientes integrado com o banco de dados. Basta apenas uma alteração, que é mudar o jtextfield abaixo dos radios ao clicar em cpf ou cnpj.
