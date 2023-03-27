@@ -9,17 +9,15 @@ public class Cliente implements Serializable {
 
     private Integer id;
     private String nome;
-    private String tipo;
     private String cpfcnpj;
     private String endereco;
 
     public Cliente() {
     }
 
-    public Cliente(Integer id, String nome, String tipo, String cpfcnpj, String endereco) {
+    public Cliente(Integer id, String nome, String cpfcnpj, String endereco) {
         this.id = id;
         this.nome = nome;
-        this.tipo = tipo;
         this.cpfcnpj = cpfcnpj;
         this.endereco = endereco;
     }
@@ -38,14 +36,6 @@ public class Cliente implements Serializable {
 
     public void setNome(String nome) {
         this.nome = nome;
-    }
-
-    public String getTipo() {
-        return tipo;
-    }
-
-    public void setTipo(String tipo) {
-        this.tipo = tipo;
     }
 
     public String getCpfcnpj() {
@@ -87,6 +77,6 @@ public class Cliente implements Serializable {
 
     @Override
     public String toString() {
-        return "Cliente{" + "id=" + id + ", nome=" + nome + ", tipo=" + tipo + ", cpfcnpj=" + cpfcnpj + ", endereco=" + endereco + '}';
+        return "Cliente{" + "id=" + id + ", nome=" + nome + ", cpfcnpj=" + cpfcnpj + ", endereco=" + endereco + '}';
     }
 }
