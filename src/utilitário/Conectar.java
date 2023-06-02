@@ -12,9 +12,9 @@ public class Conectar {
     public static Connection getConectar() {
         Connection con = null;
         try {
-            Class.forName("com.mysql.jdbc.Driver");
+            Class.forName("com.mysql.cj.jdbc.Driver");
             con = DriverManager.getConnection(url, usuario, senha);
-        } catch(Exception ex) {
+        } catch (Exception ex) {
             JOptionPane.showMessageDialog(null, "Erro ao conectar ao banco de dados" + ex.getMessage());
         }
         return con;

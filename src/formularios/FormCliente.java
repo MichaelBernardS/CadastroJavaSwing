@@ -303,7 +303,7 @@ public class FormCliente extends javax.swing.JFrame {
                 .addContainerGap(61, Short.MAX_VALUE))
         );
 
-        jTabbedPane1.addTab("Cadastro", jPanel1);
+        jTabbedPane1.addTab("Cadastro de Clientes", jPanel1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -348,39 +348,38 @@ public class FormCliente extends javax.swing.JFrame {
         c.setNome(jTnome.getText());
         c.setCpfcnpj(jFcpfcnpj.getText());
         c.setEndereco(jTendereco.getText());
-        if (jFcpfcnpj.getText().length() <= 11 ) {
-        if (ValidaCPF.isCPF(jFcpfcnpj.getText()) == true) {
-            cdao.saveOrUpdate(c);
-            preencherTabela();
-            jTabbedPane1.setSelectedIndex(0);
-            jTid.setText("");
-            jTnome.setText("");
-            campoCPF.setSelected(false);
-            campoCNPJ.setSelected(false);
-            jcpfcnpj.setText("CPF/CNPJ:");
-            jFcpfcnpj.setText("");
-            jTendereco.setText("");
-        } else {
-            JOptionPane.showMessageDialog(rootPane, "CPF inválido!");
+        if (jFcpfcnpj.getText().length() <= 11) {
+            if (ValidaCPF.isCPF(jFcpfcnpj.getText()) == true) {
+                cdao.saveOrUpdate(c);
+                preencherTabela();
+                jTabbedPane1.setSelectedIndex(0);
+                jTid.setText("");
+                jTnome.setText("");
+                campoCPF.setSelected(false);
+                campoCNPJ.setSelected(false);
+                jcpfcnpj.setText("CPF/CNPJ:");
+                jFcpfcnpj.setText("");
+                jTendereco.setText("");
+            } else {
+                JOptionPane.showMessageDialog(rootPane, "CPF inválido!");
+            }
         }
-        }
-        
-        if (jFcpfcnpj.getText().length() >= 12 ) {
-        if (ValidaCNPJ.isCNPJ(jFcpfcnpj.getText()) == true) {
-            cdao.saveOrUpdate(c);
-            preencherTabela();
-            jTabbedPane1.setSelectedIndex(0);
-            jTid.setText("");
-            jTnome.setText("");
-            campoCPF.setSelected(false);
-            campoCNPJ.setSelected(false);
-            jcpfcnpj.setText("CPF/CNPJ:");
-            jFcpfcnpj.setText("");
-            jTendereco.setText("");
-        }
-        else {
-            JOptionPane.showMessageDialog(rootPane, "CNPJ inválido!");
-        }
+
+        if (jFcpfcnpj.getText().length() >= 12) {
+            if (ValidaCNPJ.isCNPJ(jFcpfcnpj.getText()) == true) {
+                cdao.saveOrUpdate(c);
+                preencherTabela();
+                jTabbedPane1.setSelectedIndex(0);
+                jTid.setText("");
+                jTnome.setText("");
+                campoCPF.setSelected(false);
+                campoCNPJ.setSelected(false);
+                jcpfcnpj.setText("CPF/CNPJ:");
+                jFcpfcnpj.setText("");
+                jTendereco.setText("");
+            } else {
+                JOptionPane.showMessageDialog(rootPane, "CNPJ inválido!");
+            }
         }
     }//GEN-LAST:event_jBsalvarActionPerformed
 
@@ -424,12 +423,12 @@ public class FormCliente extends javax.swing.JFrame {
                 if (jTcliente.getValueAt(opcao, 2).toString().length() <= 14) {
                     jcpfcnpj.setText("CPF:");
                     campoCPF.setSelected(true);
-                jFcpfcnpj.setText((jTcliente.getValueAt(opcao, 2).toString().substring(0, 3) + jTcliente.getValueAt(opcao, 2).toString().substring(4, 7) + jTcliente.getValueAt(opcao, 2).toString().substring(8, 11) + jTcliente.getValueAt(opcao, 2).toString().substring(12, 14)));
+                    jFcpfcnpj.setText((jTcliente.getValueAt(opcao, 2).toString().substring(0, 3) + jTcliente.getValueAt(opcao, 2).toString().substring(4, 7) + jTcliente.getValueAt(opcao, 2).toString().substring(8, 11) + jTcliente.getValueAt(opcao, 2).toString().substring(12, 14)));
                 }
                 if (jTcliente.getValueAt(opcao, 2).toString().length() >= 15) {
                     jcpfcnpj.setText("CNPJ:");
                     campoCNPJ.setSelected(true);
-                jFcpfcnpj.setText((jTcliente.getValueAt(opcao, 2).toString().substring(0, 2) + jTcliente.getValueAt(opcao, 2).toString().substring(3, 6) + jTcliente.getValueAt(opcao, 2).toString().substring(7, 10) + jTcliente.getValueAt(opcao, 2).toString().substring(11, 15) + jTcliente.getValueAt(opcao, 2).toString().substring(16, 18)));
+                    jFcpfcnpj.setText((jTcliente.getValueAt(opcao, 2).toString().substring(0, 2) + jTcliente.getValueAt(opcao, 2).toString().substring(3, 6) + jTcliente.getValueAt(opcao, 2).toString().substring(7, 10) + jTcliente.getValueAt(opcao, 2).toString().substring(11, 15) + jTcliente.getValueAt(opcao, 2).toString().substring(16, 18)));
                 }
                 jTendereco.setText(jTcliente.getValueAt(opcao, 3).toString());
                 jTabbedPane1.setSelectedIndex(1);

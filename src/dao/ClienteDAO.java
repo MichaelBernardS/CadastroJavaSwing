@@ -19,7 +19,7 @@ public class ClienteDAO {
         try (PreparedStatement smt = con.prepareStatement(sql)) {
             smt.setString(1, c.getNome());
             if (c.getCpfcnpj().length() <= 11) {
-            smt.setString(2, imprimeCPF(c.getCpfcnpj()));
+                smt.setString(2, imprimeCPF(c.getCpfcnpj()));
             }
             if (c.getCpfcnpj().length() >= 12) {
                 smt.setString(2, imprimeCNPJ(c.getCpfcnpj()));
@@ -42,7 +42,7 @@ public class ClienteDAO {
         try (PreparedStatement smt = con.prepareStatement(sql)) {
             smt.setString(1, c.getNome());
             if (c.getCpfcnpj().length() <= 11) {
-            smt.setString(2, imprimeCPF(c.getCpfcnpj()));
+                smt.setString(2, imprimeCPF(c.getCpfcnpj()));
             }
             if (c.getCpfcnpj().length() >= 12) {
                 smt.setString(2, imprimeCNPJ(c.getCpfcnpj()));
