@@ -1,10 +1,16 @@
-create database cadastro
+create database cadastro;
 
-use cadastro
+use cadastro;
 
 create table cliente(
-	id INT PRIMARY KEY AUTO_INCREMENT,
-	nome VARCHAR(30) NOT NULL,
-	cpfcnpj VARCHAR(18) UNIQUE,
-	endereco VARCHAR(100) NOT NULL
-	);
+	Id INT PRIMARY KEY AUTO_INCREMENT,
+	Nome VARCHAR(30) NOT NULL,
+	Cpfcnpj VARCHAR(18) UNIQUE,
+	Endereco VARCHAR(100)
+	) ENGINE=InnoDB;
+
+create table item(
+	Id INT PRIMARY KEY AUTO_INCREMENT,
+	Descricao VARCHAR(40) NOT NULL,
+	Preco FLOAT(8,2) UNIQUE
+	) ENGINE=InnoDB;

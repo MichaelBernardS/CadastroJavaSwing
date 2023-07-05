@@ -1,4 +1,4 @@
-package dao;
+package model.dao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -7,11 +7,11 @@ import javax.swing.JOptionPane;
 import controle.Cliente;
 import java.util.ArrayList;
 import java.util.List;
-import utilitário.Conectar;
+import db.Conectar;
 import static validacaocpfcnpj.ValidaCNPJ.imprimeCNPJ;
 import static validacaocpfcnpj.ValidaCPF.imprimeCPF;
 
-public class ClienteDAO {
+public class ClienteDAO { 
 
     public void cadastrar(Cliente c) {
         Connection con = Conectar.getConectar();
