@@ -12,5 +12,12 @@ create table cliente(
 create table item(
 	Id INT PRIMARY KEY AUTO_INCREMENT,
 	Descricao VARCHAR(40) NOT NULL,
-	Preco FLOAT(8,2) UNIQUE
+	Preco FLOAT(8,2) NOT NULL
+	) ENGINE=InnoDB;
+
+create table pedido (
+ 	Id INT PRIMARY KEY AUTO_INCREMENT,
+  	Data datetime NOT NULL,
+  	Id_Cliente int UNIQUE,
+ 	FOREIGN KEY (Id_Cliente) REFERENCES cliente(Id) ON DELETE CASCADE
 	) ENGINE=InnoDB;

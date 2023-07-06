@@ -22,7 +22,7 @@ public class ItemDAO {
             con.close();
             JOptionPane.showMessageDialog(null, "Cadastrado com sucesso!");
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(null, "Erro!");
+            JOptionPane.showMessageDialog(null, "Erro ao cadastrar o produto");
         }
     }
 

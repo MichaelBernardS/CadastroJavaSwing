@@ -20,6 +20,7 @@ public class FormCliente extends javax.swing.JFrame {
         preencherTabelaItem();
         jBexcluirCliente.setVisible(false);
         jBexcluirProduto.setVisible(false);
+        jBexcluirPedido.setVisible(false);
     }
 
     @SuppressWarnings("unchecked")
@@ -64,11 +65,11 @@ public class FormCliente extends javax.swing.JFrame {
         jTidProduto = new javax.swing.JTextField();
         jdescricaoproduto = new javax.swing.JLabel();
         jTdescricaoProduto = new javax.swing.JTextField();
-        jprecoproduto = new javax.swing.JLabel();
-        jTprecoProduto = new javax.swing.JFormattedTextField();
         jBgravarProduto = new javax.swing.JButton();
         jBexcluirProduto = new javax.swing.JButton();
         jBcancelarProduto = new javax.swing.JButton();
+        jprecoproduto = new javax.swing.JLabel();
+        jTprecoProduto = new javax.swing.JTextField();
         Pedidos = new javax.swing.JPanel();
         pesquisaPedidos = new javax.swing.JTextField();
         jLimgLupaPedido = new javax.swing.JLabel();
@@ -433,16 +434,6 @@ public class FormCliente extends javax.swing.JFrame {
         jdescricaoproduto.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
         jdescricaoproduto.setText("Descrição:");
 
-        jprecoproduto.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
-        jprecoproduto.setText("Preço:");
-
-        jTprecoProduto.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
-        jTprecoProduto.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTprecoProdutoActionPerformed(evt);
-            }
-        });
-
         jBgravarProduto.setText("Gravar");
         jBgravarProduto.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -464,34 +455,32 @@ public class FormCliente extends javax.swing.JFrame {
             }
         });
 
+        jprecoproduto.setText("Preço:");
+
         javax.swing.GroupLayout CadastroDeProdutosLayout = new javax.swing.GroupLayout(CadastroDeProdutos);
         CadastroDeProdutos.setLayout(CadastroDeProdutosLayout);
         CadastroDeProdutosLayout.setHorizontalGroup(
             CadastroDeProdutosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jLabelCadastroDeItens, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, CadastroDeProdutosLayout.createSequentialGroup()
-                .addGroup(CadastroDeProdutosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, CadastroDeProdutosLayout.createSequentialGroup()
-                        .addGap(30, 30, 30)
-                        .addComponent(jprecoproduto)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(CadastroDeProdutosLayout.createSequentialGroup()
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(CadastroDeProdutosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jidproduto)
-                            .addComponent(jdescricaoproduto))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(CadastroDeProdutosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jidproduto, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jdescricaoproduto, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jprecoproduto, javax.swing.GroupLayout.Alignment.TRAILING))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(CadastroDeProdutosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jTidProduto, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTdescricaoProduto, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(CadastroDeProdutosLayout.createSequentialGroup()
-                        .addComponent(jBgravarProduto, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(CadastroDeProdutosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(jTprecoProduto, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jBgravarProduto, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 125, Short.MAX_VALUE))
+                        .addGap(18, 18, 18)
                         .addComponent(jBexcluirProduto, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(12, 12, 12)
-                        .addComponent(jBcancelarProduto, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jTprecoProduto, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTdescricaoProduto, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(315, 315, 315))
+                        .addGap(18, 18, 18)
+                        .addComponent(jBcancelarProduto, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(303, 303, 303))
         );
         CadastroDeProdutosLayout.setVerticalGroup(
             CadastroDeProdutosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -501,20 +490,20 @@ public class FormCliente extends javax.swing.JFrame {
                 .addGroup(CadastroDeProdutosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jidproduto)
                     .addComponent(jTidProduto, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 57, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(CadastroDeProdutosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jTdescricaoProduto, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jdescricaoproduto))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(CadastroDeProdutosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jTprecoProduto, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jprecoproduto))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 103, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 136, Short.MAX_VALUE)
                 .addGroup(CadastroDeProdutosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jBgravarProduto, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jBexcluirProduto, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jBcancelarProduto, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(82, 82, 82))
+                .addGap(106, 106, 106))
         );
 
         Abas.addTab("Cadastro de Produtos", CadastroDeProdutos);
@@ -658,24 +647,24 @@ public class FormCliente extends javax.swing.JFrame {
             CadastroDePedidosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(CadastroDePedidosLayout.createSequentialGroup()
                 .addComponent(jLabelCadastroDePedidos, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(22, 22, 22)
+                .addGap(12, 12, 12)
                 .addGroup(CadastroDePedidosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jidpedido)
-                    .addComponent(jTidPedido, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                    .addComponent(jTidPedido, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jidpedido))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(CadastroDePedidosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jTdataPedido, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jdatapedido))
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(CadastroDePedidosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jTclientePedido, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jclientepedido))
-                .addGap(42, 42, 42)
+                .addGap(94, 94, 94)
                 .addGroup(CadastroDePedidosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jBgravarPedido, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jBexcluirPedido, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jBcancelarPedido, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(0, 172, Short.MAX_VALUE))
+                .addGap(0, 154, Short.MAX_VALUE))
         );
 
         Abas.addTab("Cadastro de Pedidos", CadastroDePedidos);
@@ -747,6 +736,9 @@ public class FormCliente extends javax.swing.JFrame {
             c.setId(Integer.parseInt(jTid.getText()));
         }
         c.setNome(jTFnomeCliente.getText());
+        if (jTFnomeCliente.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(rootPane, "Necessário informar nome");
+        } else {
         c.setCpfcnpj(jFcpfcnpjCliente.getText());
         c.setEndereco(jTFenderecoCliente.getText());
         if (jFcpfcnpjCliente.getText().length() <= 11) {
@@ -764,6 +756,7 @@ public class FormCliente extends javax.swing.JFrame {
             } else {
                 JOptionPane.showMessageDialog(rootPane, "CPF inválido!");
             }
+        }
         }
 
         if (jFcpfcnpjCliente.getText().length() >= 12) {
@@ -794,6 +787,13 @@ public class FormCliente extends javax.swing.JFrame {
 
     private void jBnovoClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBnovoClienteActionPerformed
         Abas.setSelectedIndex(1);
+        jTid.setText("");
+        jTFnomeCliente.setText("");
+        campoCPF.setSelected(false);
+        campoCNPJ.setSelected(false);
+        jcpfcnpj.setText("CPF/CNPJ:");
+        jFcpfcnpjCliente.setText("");
+        jTFenderecoCliente.setText("");
         jBexcluirCliente.setVisible(false);
     }//GEN-LAST:event_jBnovoClienteActionPerformed
 
@@ -835,6 +835,9 @@ public class FormCliente extends javax.swing.JFrame {
 
     private void jBnovoProdutoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBnovoProdutoActionPerformed
              Abas.setSelectedIndex(3);
+             jTidProduto.setText("");
+        jTdescricaoProduto.setText("");
+        jTprecoProduto.setText("");
         jBexcluirProduto.setVisible(false);
     }//GEN-LAST:event_jBnovoProdutoActionPerformed
 
@@ -874,18 +877,24 @@ public class FormCliente extends javax.swing.JFrame {
             i.setId(Integer.parseInt(jTidProduto.getText()));
         }
         i.setDescricao(jTdescricaoProduto.getText());
+        jTprecoProduto.setText("0.00");
         i.setPreco(Double.parseDouble(jTprecoProduto.getText()));
+
+        if (jTdescricaoProduto.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(rootPane, "Precisa colocar o item!");
+                    jTprecoProduto.setText("");
+        }
+        
+        else {
         idao.saveOrUpdate(i);
                 preencherTabelaItem();
                 Abas.setSelectedIndex(2);
                 jTidProduto.setText("");
                 jTdescricaoProduto.setText("");
                 jTprecoProduto.setText("");
+        }
+        
     }//GEN-LAST:event_jBgravarProdutoActionPerformed
-
-    private void jTprecoProdutoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTprecoProdutoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTprecoProdutoActionPerformed
 
     private void jTidProdutoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTidProdutoActionPerformed
         // TODO add your handling code here:
@@ -992,7 +1001,7 @@ public class FormCliente extends javax.swing.JFrame {
     private javax.swing.JTextField jTid;
     private javax.swing.JTextField jTidPedido;
     private javax.swing.JTextField jTidProduto;
-    private javax.swing.JFormattedTextField jTprecoProduto;
+    private javax.swing.JTextField jTprecoProduto;
     private javax.swing.JTable jTproduto;
     private javax.swing.JTable jTproduto1;
     private javax.swing.JLabel jclientepedido;
