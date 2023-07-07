@@ -17,7 +17,9 @@ create table item(
 
 create table pedido (
  	Id INT PRIMARY KEY AUTO_INCREMENT,
-  	Data datetime NOT NULL,
-  	Id_Cliente int UNIQUE,
+  	Data date NOT NULL,
+  	Id_Cliente int,
  	FOREIGN KEY (Id_Cliente) REFERENCES cliente(Id) ON DELETE CASCADE
 	) ENGINE=InnoDB;
+
+https://www.youtube.com/watch?v=Wm1D2Su_ZFU&ab_channel=QuartelGeneraldoDev
