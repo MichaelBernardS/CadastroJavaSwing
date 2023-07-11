@@ -6,6 +6,8 @@ import controle.Pedido;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import model.dao.ClienteDAO;
@@ -86,12 +88,12 @@ public class FormCliente extends javax.swing.JFrame {
         jidpedido = new javax.swing.JLabel();
         jTidPedido = new javax.swing.JTextField();
         jdatapedido = new javax.swing.JLabel();
-        jTdataPedido = new javax.swing.JTextField();
         jclientepedido = new javax.swing.JLabel();
         jBgravarPedido = new javax.swing.JButton();
         jBexcluirPedido = new javax.swing.JButton();
         jBcancelarPedido = new javax.swing.JButton();
         jcbClientes = new javax.swing.JComboBox();
+        jTdataPedido = new javax.swing.JFormattedTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -599,12 +601,6 @@ public class FormCliente extends javax.swing.JFrame {
         jdatapedido.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
         jdatapedido.setText("Data:");
 
-        jTdataPedido.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                jTdataPedidoFocusLost(evt);
-            }
-        });
-
         jclientepedido.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
         jclientepedido.setText("Cliente:");
 
@@ -629,6 +625,7 @@ public class FormCliente extends javax.swing.JFrame {
             }
         });
 
+        jcbClientes.setActionCommand("ComboBoxChanged");
         jcbClientes.addAncestorListener(new javax.swing.event.AncestorListener() {
             public void ancestorAdded(javax.swing.event.AncestorEvent evt) {
                 jcbClientesAncestorAdded(evt);
@@ -643,6 +640,12 @@ public class FormCliente extends javax.swing.JFrame {
                 jcbClientesActionPerformed(evt);
             }
         });
+
+        try {
+            jTdataPedido.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##/##/####")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
 
         javax.swing.GroupLayout CadastroDePedidosLayout = new javax.swing.GroupLayout(CadastroDePedidos);
         CadastroDePedidos.setLayout(CadastroDePedidosLayout);
@@ -663,10 +666,10 @@ public class FormCliente extends javax.swing.JFrame {
                         .addComponent(jBexcluirPedido, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(jBcancelarPedido, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jTidPedido, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jcbClientes, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(CadastroDePedidosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addComponent(jcbClientes, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jTdataPedido, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 150, Short.MAX_VALUE)))
+                        .addComponent(jTdataPedido, javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jTidPedido, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 101, Short.MAX_VALUE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         CadastroDePedidosLayout.setVerticalGroup(
@@ -679,8 +682,8 @@ public class FormCliente extends javax.swing.JFrame {
                     .addComponent(jidpedido))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(CadastroDePedidosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTdataPedido, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jdatapedido))
+                    .addComponent(jdatapedido)
+                    .addComponent(jTdataPedido, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(CadastroDePedidosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jcbClientes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -690,7 +693,7 @@ public class FormCliente extends javax.swing.JFrame {
                     .addComponent(jBgravarPedido, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jBexcluirPedido, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jBcancelarPedido, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(0, 168, Short.MAX_VALUE))
+                .addGap(0, 170, Short.MAX_VALUE))
         );
 
         Abas.addTab("Cadastro de Pedidos", CadastroDePedidos);
@@ -750,6 +753,8 @@ public class FormCliente extends javax.swing.JFrame {
             Abas.setSelectedIndex(0);
             jTid.setText("");
             jTFnomeCliente.setText("");
+            campoCPF.setSelected(false);
+            campoCNPJ.setSelected(false);
             jFcpfcnpjCliente.setText("");
             jTFenderecoCliente.setText("");
         }
@@ -902,13 +907,16 @@ public class FormCliente extends javax.swing.JFrame {
         if (!"".equals(jTidProduto.getText())) {
             i.setId(Integer.parseInt(jTidProduto.getText()));
         }
+        if ("".equals(jTprecoProduto.getText())) {
+            jTprecoProduto.setText("0.00");
+        }
         i.setDescricao(jTdescricaoProduto.getText());
-        jTprecoProduto.setText("0.00");
+        
         i.setPreco(Double.parseDouble(jTprecoProduto.getText()));
         if (jTdescricaoProduto.getText().isEmpty()) {
             JOptionPane.showMessageDialog(rootPane, "Precisa colocar o item!");
-            jTprecoProduto.setText("");
-        } else {
+        }
+        else {
             idao.saveOrUpdate(i);
             preencherTabelaItem();
             Abas.setSelectedIndex(2);
@@ -944,12 +952,31 @@ public class FormCliente extends javax.swing.JFrame {
             jTidPedido.setText("");
             jTdataPedido.setText("");
         } catch (ParseException ex) {
-            JOptionPane.showMessageDialog(null, "Erro ao formatar campo de texto", "ERRO", JOptionPane.ERROR);
+            JOptionPane.showMessageDialog(rootPane, "Ocorreu um erro no cadastro");
         }
     }//GEN-LAST:event_jBgravarPedidoActionPerformed
 
     private void jBexcluirPedidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBexcluirPedidoActionPerformed
-        // TODO add your handling code here:
+        Pedido p = new Pedido();
+        Cliente c = new Cliente();
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        int opcao = jTpedido.getSelectedRow();
+        if (opcao >= 0) {
+            p.setId(Integer.parseInt(jTpedido.getValueAt(opcao, 0).toString()));
+            try {
+                p.setData(sdf.parse(jTpedido.getValueAt(opcao, 1).toString()));
+            } catch (ParseException ex) {
+                Logger.getLogger(FormCliente.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            c = (Cliente) jcbClientes.getSelectedItem();
+            p.setCliente(c);
+            PedidoDAO pdao = new PedidoDAO();
+            pdao.excluir(p);
+            preencherTabelaPedido();
+            Abas.setSelectedIndex(4);
+            jTidPedido.setText("");
+            jTdataPedido.setText("");
+        }
     }//GEN-LAST:event_jBexcluirPedidoActionPerformed
 
     private void jBcancelarPedidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBcancelarPedidoActionPerformed
@@ -960,17 +987,25 @@ public class FormCliente extends javax.swing.JFrame {
     }//GEN-LAST:event_jBcancelarPedidoActionPerformed
 
     private void jTpedidoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTpedidoMouseClicked
-        // TODO add your handling code here:
+        if (evt.getClickCount() == 2) {
+            Cliente c = new Cliente();
+            c = (Cliente) jcbClientes.getSelectedItem();
+            jBexcluirPedido.setVisible(true);
+            int opcao = jTpedido.getSelectedRow();
+            if (opcao >= 0) {
+                jTidPedido.setText(jTpedido.getValueAt(opcao, 0).toString());
+                jTdataPedido.setText(jTpedido.getValueAt(opcao, 1).toString());
+                jcbClientes.setSelectedItem(c);
+                jcbClientes.setSelectedItem(jTpedido.getValueAt(opcao, 2).toString());
+                Abas.setSelectedIndex(5);
+            }
+        }
     }//GEN-LAST:event_jTpedidoMouseClicked
 
     private void jBnovoPedidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBnovoPedidoActionPerformed
         Abas.setSelectedIndex(5);
         jBexcluirPedido.setVisible(false);
     }//GEN-LAST:event_jBnovoPedidoActionPerformed
-
-    private void jTdataPedidoFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTdataPedidoFocusLost
-
-    }//GEN-LAST:event_jTdataPedidoFocusLost
 
     private void jcbClientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbClientesActionPerformed
         // TODO add your handling code here:
@@ -1004,14 +1039,15 @@ public class FormCliente extends javax.swing.JFrame {
             modeloTabelaProduto.addRow(new Object[]{i.getId(), i.getDescricao(), i.getPreco()});
         }
     }
-    
+
     public void preencherTabelaPedido() {
         PedidoDAO pdao = new PedidoDAO();
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
         List<Pedido> listaDePedido = pdao.listarTodos();
         DefaultTableModel modeloTabelaPedido = (DefaultTableModel) jTpedido.getModel();
         modeloTabelaPedido.setRowCount(0);
         for (Pedido p : listaDePedido) {
-            modeloTabelaPedido.addRow(new Object[]{p.getId(), p.getData(), p.getCliente().getId()});
+            modeloTabelaPedido.addRow(new Object[]{p.getId(), sdf.format(p.getData()), p.getCliente().getId()});
         }
     }
 
@@ -1061,7 +1097,7 @@ public class FormCliente extends javax.swing.JFrame {
     private javax.swing.JTextField jTFenderecoCliente;
     private javax.swing.JTextField jTFnomeCliente;
     private javax.swing.JTable jTcliente;
-    private javax.swing.JTextField jTdataPedido;
+    private javax.swing.JFormattedTextField jTdataPedido;
     private javax.swing.JTextField jTdescricaoProduto;
     private javax.swing.JTextField jTid;
     private javax.swing.JTextField jTidPedido;

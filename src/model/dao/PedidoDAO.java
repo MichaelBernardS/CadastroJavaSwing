@@ -9,9 +9,12 @@ import controle.Pedido;
 import java.util.ArrayList;
 import java.util.List;
 import db.Conectar;
+import java.text.SimpleDateFormat;
+import java.util.HashMap;
+import java.util.Map;
 
 public class PedidoDAO {
-    
+
     public void cadastrar(Pedido p) {
         Connection con = Conectar.getConectar();
         String sql = "INSERT INTO pedido (data, id_cliente) VALUES (?,?) ";
@@ -26,7 +29,7 @@ public class PedidoDAO {
             JOptionPane.showMessageDialog(null, "Erro ao cadastrar o pedido!");
         }
     }
-    
+
     public void atualizar(Pedido p) {
         Connection con = Conectar.getConectar();
         String sql = "UPDATE pedido "
@@ -35,6 +38,7 @@ public class PedidoDAO {
         try (PreparedStatement smt = con.prepareStatement(sql)) {
             smt.setDate(1, new java.sql.Date(p.getData().getTime()));
             smt.setInt(2, p.getCliente().getId());
+            smt.setInt(3, p.getId());
             smt.executeUpdate();
             smt.close();
             con.close();
@@ -43,7 +47,7 @@ public class PedidoDAO {
             JOptionPane.showMessageDialog(null, "Erro ao atualizar o registro!");
         }
     }
-    
+
     public void saveOrUpdate(Pedido pedido) {
         if (pedido.getId() == null) {
             cadastrar(pedido);
@@ -51,12 +55,13 @@ public class PedidoDAO {
             atualizar(pedido);
         }
     }
-    
+
     public void excluir(Pedido p) {
         Connection con = Conectar.getConectar();
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
         String sql = "DELETE FROM pedido WHERE id = ? ";
         int opcao = JOptionPane.showConfirmDialog(null, "Confirma a exclusão do pedido "
-                + p.getData() + "?", "Exclusão de um pedido", JOptionPane.YES_NO_OPTION);
+                + "de Id: " + p.getId() + " com data: " + sdf.format(p.getData()) + "?", "Exclusão de um pedido", JOptionPane.YES_NO_OPTION);
         if (opcao == JOptionPane.YES_OPTION) {
             try (PreparedStatement smt = con.prepareStatement(sql)) {
                 smt.setInt(1, p.getId());
@@ -69,29 +74,50 @@ public class PedidoDAO {
             }
         }
     }
-    
+
     public List<Pedido> listarTodos() {
         Connection con = Conectar.getConectar();
         List<Pedido> lista = new ArrayList<>();
-        String sql = "SELECT p.id, p.data, p.id_cliente FROM pedido as p JOIN cliente as c ON (p.id_cliente = c.id) ";
+        String sql = "SELECT pedido.*, cliente.Id as IdCliente, cliente.nome as ClNome, cliente.cpfcnpj as ClCpfcnpj, cliente.endereco as ClEndereco "
+                + "from pedido inner join cliente on pedido.Id_Cliente = cliente.Id order by id ";
         try (PreparedStatement smt = con.prepareStatement(sql)) {
-            ResultSet resultado = smt.executeQuery();
-            while (resultado.next()) {
-                Pedido p = new Pedido();
-                Cliente c = new Cliente();
-                c.setId(resultado.getInt("c.id"));
-                c.setNome(resultado.getString("nome"));
-                c.setCpfcnpj(resultado.getString("cpfcnpj"));
-                c.setEndereco(resultado.getString("endereco"));
-                p.setId(resultado.getInt("id"));
-                p.setData(resultado.getDate("data"));
-                p.setCliente(c);
-                lista.add(p);
+            ResultSet rs = smt.executeQuery();
+            List<Pedido> list = new ArrayList<>();
+            Map<Integer, Cliente> map = new HashMap<>();
+
+            while (rs.next()) {
+
+                Cliente cl = map.get(rs.getInt("IdCliente"));
+
+                if (cl == null) {
+                    cl = instantiateCliente(rs);
+                    map.put(rs.getInt("IdCliente"), cl);
+                }
+
+                Pedido ped = instantiatePedido(rs, cl);
+                list.add(ped);
             }
+            return list;
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(null, "Erro ao buscar os registros");
         }
         return lista;
     }
-    
+
+    private Pedido instantiatePedido(ResultSet rs, Cliente cl) throws SQLException, java.sql.SQLException {
+        Pedido obj = new Pedido();
+        obj.setId(rs.getInt("Id"));
+        obj.setData(rs.getDate("data"));
+        obj.setCliente(cl);
+        return obj;
+    }
+
+    private Cliente instantiateCliente(ResultSet rs) throws SQLException, java.sql.SQLException {
+        Cliente c = new Cliente();
+        c.setId(rs.getInt("IdCliente"));
+        c.setNome(rs.getString("ClNome"));
+        c.setCpfcnpj(rs.getString("ClCpfcnpj"));
+        c.setEndereco(rs.getString("ClEndereco"));
+        return c;
+    }
 }
