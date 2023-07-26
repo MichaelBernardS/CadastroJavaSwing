@@ -8,6 +8,8 @@ import controle.Cliente;
 import java.util.ArrayList;
 import java.util.List;
 import db.Conectar;
+import java.util.HashSet;
+import java.util.Set;
 import static validacaocpfcnpj.ValidaCNPJ.imprimeCNPJ;
 import static validacaocpfcnpj.ValidaCPF.imprimeCPF;
 
@@ -84,9 +86,9 @@ public class ClienteDAO {
         }
     }
 
-    public List<Cliente> listarTodos() {
+    public Set<Cliente> listarTodos() {
         Connection con = Conectar.getConectar();
-        List<Cliente> lista = new ArrayList<>();
+        Set<Cliente> lista = new HashSet<>();
         String sql = "SELECT * FROM cliente ORDER BY id ";
         try (PreparedStatement smt = con.prepareStatement(sql)) {
             ResultSet resultado = smt.executeQuery();

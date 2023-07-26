@@ -10,7 +10,9 @@ import java.sql.ResultSet;
 import javax.swing.JOptionPane;
 import controle.ItemPedido;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class ItemPedidoDAO {
 
@@ -19,7 +21,7 @@ public class ItemPedidoDAO {
         String sql = "INSERT INTO itempedido (Qtde, PrecoVenda), Id_Pedido, Id_Item VALUES (?,?,?,?) ";
         try (PreparedStatement smt = con.prepareStatement(sql)) {
             smt.setInt(1, itPe.getQtde());
-            smt.setDouble(2, itPe.getItem().getPreco());
+            smt.setDouble(2, itPe.getPrecoVenda());
             smt.setInt(3, itPe.getPedido().getId());
             smt.setInt(4, itPe.getItem().getId());
             smt.executeUpdate();
@@ -77,9 +79,9 @@ public class ItemPedidoDAO {
         }
     }
 
-    public List<ItemPedido> listarTodos() {
+    public Set<ItemPedido> listarTodos() {
         Connection con = Conectar.getConectar();
-        List<ItemPedido> lista = new ArrayList<>();
+        Set<ItemPedido> lista = new HashSet<>();
         String sql = "SELECT * FROM itempedido ORDER BY id ";
         try (PreparedStatement smt = con.prepareStatement(sql)) {
             ResultSet rs = smt.executeQuery();

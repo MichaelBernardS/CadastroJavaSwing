@@ -8,8 +8,12 @@ import controle.Item;
 import java.util.ArrayList;
 import java.util.List;
 import db.Conectar;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
 
-public class ItemDAO { 
+public class ItemDAO {
 
     public void cadastrar(Item i) {
         Connection con = Conectar.getConectar();
@@ -76,12 +80,17 @@ public class ItemDAO {
         String sql = "SELECT * FROM item ORDER BY id ";
         try (PreparedStatement smt = con.prepareStatement(sql)) {
             ResultSet resultado = smt.executeQuery();
+            Map<Integer, Item> mapaItens = new HashMap<>();
             while (resultado.next()) {
-                Item i = new Item();
-                i.setId(resultado.getInt("Id"));
-                i.setDescricao(resultado.getString("Descricao"));
-                i.setPreco(resultado.getDouble("Preco"));
-                lista.add(i);
+                int id = resultado.getInt("Id");
+                if (!mapaItens.containsKey(id)) {
+                    Item i = new Item();
+                    i.setId(id);
+                    i.setDescricao(resultado.getString("Descricao"));
+                    i.setPreco(resultado.getDouble("Preco"));
+                    mapaItens.put(id, i);
+                    lista.add(i);
+                }
             }
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(null, "Erro ao buscar os registros");

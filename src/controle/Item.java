@@ -64,6 +64,6 @@ public class Item implements Serializable {
 	
 	@Override
 	public String toString() {
-		return "Item: Id: " + id + ", Descrição: " + descricao + ", Preço: " + String.format("%.2f", preco);
+		return "Id: " + id + " - Produto: " + descricao + " - R$ " + String.format("%.2f", preco);
 	}
 }

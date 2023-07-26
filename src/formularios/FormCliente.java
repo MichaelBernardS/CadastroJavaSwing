@@ -5,7 +5,9 @@ import controle.Item;
 import controle.Pedido;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -28,6 +30,10 @@ public class FormCliente extends javax.swing.JFrame {
         jBexcluirCliente.setVisible(false);
         jBexcluirProduto.setVisible(false);
         jBexcluirPedido.setVisible(false);
+        iniciarComboBoxClientes();
+        jcbClientes.setSelectedIndex(-1);
+        iniciarComboBoxProdutos();
+        jcbProdutos.setSelectedIndex(-1);
     }
 
     @SuppressWarnings("unchecked")
@@ -94,6 +100,12 @@ public class FormCliente extends javax.swing.JFrame {
         jBcancelarPedido = new javax.swing.JButton();
         jcbClientes = new javax.swing.JComboBox();
         jTdataPedido = new javax.swing.JFormattedTextField();
+        jclientepedido1 = new javax.swing.JLabel();
+        jTFqtdeItPe = new javax.swing.JTextField();
+        jclientepedido2 = new javax.swing.JLabel();
+        jclientepedido3 = new javax.swing.JLabel();
+        jcbProdutos = new javax.swing.JComboBox();
+        jTprecoItPe = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -439,7 +451,7 @@ public class FormCliente extends javax.swing.JFrame {
         });
 
         jdescricaoproduto.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
-        jdescricaoproduto.setText("Descrição:");
+        jdescricaoproduto.setText("Produto:");
 
         jBgravarProduto.setText("Gravar");
         jBgravarProduto.addActionListener(new java.awt.event.ActionListener() {
@@ -525,7 +537,7 @@ public class FormCliente extends javax.swing.JFrame {
                 {null, null, null}
             },
             new String [] {
-                "Id", "Data", "Cliente (Id)"
+                "Id", "Data", "Cliente"
             }
         ) {
             boolean[] canEdit = new boolean [] {
@@ -647,6 +659,38 @@ public class FormCliente extends javax.swing.JFrame {
             ex.printStackTrace();
         }
 
+        jclientepedido1.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
+        jclientepedido1.setText("Preço:");
+
+        jclientepedido2.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
+        jclientepedido2.setText("Produto:");
+
+        jclientepedido3.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
+        jclientepedido3.setText("Quantidade:");
+
+        jcbProdutos.setActionCommand("ComboBoxChanged");
+        jcbProdutos.addAncestorListener(new javax.swing.event.AncestorListener() {
+            public void ancestorAdded(javax.swing.event.AncestorEvent evt) {
+                jcbProdutosAncestorAdded(evt);
+            }
+            public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
+            }
+            public void ancestorRemoved(javax.swing.event.AncestorEvent evt) {
+            }
+        });
+        jcbProdutos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jcbProdutosActionPerformed(evt);
+            }
+        });
+
+        jTprecoItPe.setEditable(false);
+        jTprecoItPe.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTprecoItPeActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout CadastroDePedidosLayout = new javax.swing.GroupLayout(CadastroDePedidos);
         CadastroDePedidos.setLayout(CadastroDePedidosLayout);
         CadastroDePedidosLayout.setHorizontalGroup(
@@ -657,7 +701,10 @@ public class FormCliente extends javax.swing.JFrame {
                 .addGroup(CadastroDePedidosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jclientepedido)
                     .addComponent(jdatapedido)
-                    .addComponent(jidpedido))
+                    .addComponent(jidpedido)
+                    .addComponent(jclientepedido1)
+                    .addComponent(jclientepedido2)
+                    .addComponent(jclientepedido3))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(CadastroDePedidosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(CadastroDePedidosLayout.createSequentialGroup()
@@ -669,7 +716,10 @@ public class FormCliente extends javax.swing.JFrame {
                     .addComponent(jcbClientes, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(CadastroDePedidosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                         .addComponent(jTdataPedido, javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(jTidPedido, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 101, Short.MAX_VALUE)))
+                        .addComponent(jTidPedido, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 101, Short.MAX_VALUE))
+                    .addComponent(jTFqtdeItPe, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jcbProdutos, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTprecoItPe, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         CadastroDePedidosLayout.setVerticalGroup(
@@ -685,15 +735,27 @@ public class FormCliente extends javax.swing.JFrame {
                     .addComponent(jdatapedido)
                     .addComponent(jTdataPedido, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(CadastroDePedidosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jclientepedido)
+                    .addComponent(jcbClientes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(CadastroDePedidosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jcbClientes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jclientepedido))
-                .addGap(94, 94, 94)
+                    .addComponent(jcbProdutos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jclientepedido2))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(CadastroDePedidosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jTFqtdeItPe, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jclientepedido3))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(CadastroDePedidosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jTprecoItPe, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jclientepedido1))
+                .addGap(37, 37, 37)
                 .addGroup(CadastroDePedidosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jBgravarPedido, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jBexcluirPedido, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jBcancelarPedido, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(0, 170, Short.MAX_VALUE))
+                .addGap(0, 101, Short.MAX_VALUE))
         );
 
         Abas.addTab("Cadastro de Pedidos", CadastroDePedidos);
@@ -911,12 +973,11 @@ public class FormCliente extends javax.swing.JFrame {
             jTprecoProduto.setText("0.00");
         }
         i.setDescricao(jTdescricaoProduto.getText());
-        
+
         i.setPreco(Double.parseDouble(jTprecoProduto.getText()));
         if (jTdescricaoProduto.getText().isEmpty()) {
             JOptionPane.showMessageDialog(rootPane, "Precisa colocar o item!");
-        }
-        else {
+        } else {
             idao.saveOrUpdate(i);
             preencherTabelaItem();
             Abas.setSelectedIndex(2);
@@ -958,7 +1019,6 @@ public class FormCliente extends javax.swing.JFrame {
 
     private void jBexcluirPedidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBexcluirPedidoActionPerformed
         Pedido p = new Pedido();
-        Cliente c = new Cliente();
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
         int opcao = jTpedido.getSelectedRow();
         if (opcao >= 0) {
@@ -968,8 +1028,6 @@ public class FormCliente extends javax.swing.JFrame {
             } catch (ParseException ex) {
                 Logger.getLogger(FormCliente.class.getName()).log(Level.SEVERE, null, ex);
             }
-            c = (Cliente) jcbClientes.getSelectedItem();
-            p.setCliente(c);
             PedidoDAO pdao = new PedidoDAO();
             pdao.excluir(p);
             preencherTabelaPedido();
@@ -982,25 +1040,56 @@ public class FormCliente extends javax.swing.JFrame {
     private void jBcancelarPedidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBcancelarPedidoActionPerformed
         jTidPedido.setText("");
         jTdataPedido.setText("");
+        jTFqtdeItPe.setText("");
+        jTprecoItPe.setText("");
         jBexcluirPedido.setVisible(false);
+        jcbClientes.setSelectedIndex(-1);
+        jcbProdutos.setSelectedIndex(-1);
         Abas.setSelectedIndex(4);
     }//GEN-LAST:event_jBcancelarPedidoActionPerformed
 
     private void jTpedidoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTpedidoMouseClicked
         if (evt.getClickCount() == 2) {
-            Cliente c = new Cliente();
-            c = (Cliente) jcbClientes.getSelectedItem();
+            Cliente c = (Cliente) jcbClientes.getSelectedItem();
+            jcbClientes.getSelectedIndex();
             jBexcluirPedido.setVisible(true);
             int opcao = jTpedido.getSelectedRow();
             if (opcao >= 0) {
                 jTidPedido.setText(jTpedido.getValueAt(opcao, 0).toString());
                 jTdataPedido.setText(jTpedido.getValueAt(opcao, 1).toString());
-                jcbClientes.setSelectedItem(c);
-                jcbClientes.setSelectedItem(jTpedido.getValueAt(opcao, 2).toString());
+                iniciarComboBoxClientes();
+
+                Cliente cliente = (Cliente) jTpedido.getValueAt(opcao, 2);
                 Abas.setSelectedIndex(5);
+                jcbClientes.setSelectedItem(cliente);
             }
         }
     }//GEN-LAST:event_jTpedidoMouseClicked
+
+    private void iniciarComboBoxClientes() {
+        ClienteDAO cdao = new ClienteDAO();
+        Set<Cliente> listaDeClientes = cdao.listarTodos();
+        Set<Cliente> clientesUnicos = new HashSet<>();
+        for (Cliente cl : listaDeClientes) {
+            clientesUnicos.add(cl);
+        }
+        jcbClientes.removeAllItems();
+
+        for (Cliente cl : clientesUnicos) {
+            jcbClientes.addItem(cl);
+        }
+    }
+
+    private void iniciarComboBoxProdutos() {
+        ItemDAO idao = new ItemDAO();
+        List<Item> listaDeProdutos = idao.listarTodos();
+        jcbProdutos.removeAllItems();
+        
+        for (Item i : listaDeProdutos) {
+            jcbProdutos.addItem(i);
+        }
+    }
+
 
     private void jBnovoPedidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBnovoPedidoActionPerformed
         Abas.setSelectedIndex(5);
@@ -1012,17 +1101,24 @@ public class FormCliente extends javax.swing.JFrame {
     }//GEN-LAST:event_jcbClientesActionPerformed
 
     private void jcbClientesAncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_jcbClientesAncestorAdded
-        ClienteDAO dao = new ClienteDAO();
-        List<Cliente> listaDeClientes = dao.listarTodos();
-        jcbClientes.removeAllItems();
-        for (Cliente c : listaDeClientes) {
-            jcbClientes.addItem(c);
-        }
+
     }//GEN-LAST:event_jcbClientesAncestorAdded
+
+    private void jcbProdutosAncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_jcbProdutosAncestorAdded
+
+    }//GEN-LAST:event_jcbProdutosAncestorAdded
+
+    private void jcbProdutosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbProdutosActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jcbProdutosActionPerformed
+
+    private void jTprecoItPeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTprecoItPeActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTprecoItPeActionPerformed
 
     public void preencherTabelaCliente() {
         ClienteDAO cdao = new ClienteDAO();
-        List<Cliente> listaDeCliente = cdao.listarTodos();
+        Set<Cliente> listaDeCliente = cdao.listarTodos();
         DefaultTableModel modeloTabelaCliente = (DefaultTableModel) jTcliente.getModel();
         modeloTabelaCliente.setRowCount(0);
         for (Cliente c : listaDeCliente) {
@@ -1047,7 +1143,7 @@ public class FormCliente extends javax.swing.JFrame {
         DefaultTableModel modeloTabelaPedido = (DefaultTableModel) jTpedido.getModel();
         modeloTabelaPedido.setRowCount(0);
         for (Pedido p : listaDePedido) {
-            modeloTabelaPedido.addRow(new Object[]{p.getId(), sdf.format(p.getData()), p.getCliente().getId()});
+            modeloTabelaPedido.addRow(new Object[]{p.getId(), sdf.format(p.getData()), p.getCliente()});
         }
     }
 
@@ -1096,6 +1192,7 @@ public class FormCliente extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPaneProdutos;
     private javax.swing.JTextField jTFenderecoCliente;
     private javax.swing.JTextField jTFnomeCliente;
+    private javax.swing.JTextField jTFqtdeItPe;
     private javax.swing.JTable jTcliente;
     private javax.swing.JFormattedTextField jTdataPedido;
     private javax.swing.JTextField jTdescricaoProduto;
@@ -1103,10 +1200,15 @@ public class FormCliente extends javax.swing.JFrame {
     private javax.swing.JTextField jTidPedido;
     private javax.swing.JTextField jTidProduto;
     private javax.swing.JTable jTpedido;
+    private javax.swing.JTextField jTprecoItPe;
     private javax.swing.JTextField jTprecoProduto;
     private javax.swing.JTable jTproduto;
     private javax.swing.JComboBox jcbClientes;
+    private javax.swing.JComboBox jcbProdutos;
     private javax.swing.JLabel jclientepedido;
+    private javax.swing.JLabel jclientepedido1;
+    private javax.swing.JLabel jclientepedido2;
+    private javax.swing.JLabel jclientepedido3;
     private javax.swing.JLabel jcpfcnpj;
     private javax.swing.JLabel jdatapedido;
     private javax.swing.JLabel jdescricaoproduto;
