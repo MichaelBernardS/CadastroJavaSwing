@@ -2,9 +2,12 @@ package formularios;
 
 import controle.Cliente;
 import controle.Item;
+import controle.ItemPedido;
 import controle.Pedido;
+import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -14,6 +17,7 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import model.dao.ClienteDAO;
 import model.dao.ItemDAO;
+import model.dao.ItemPedidoDAO;
 import model.dao.PedidoDAO;
 import sonumeros.SoNumeros;
 import validacaocpfcnpj.ValidaCNPJ;
@@ -84,11 +88,15 @@ public class FormCliente extends javax.swing.JFrame {
         jprecoproduto = new javax.swing.JLabel();
         jTprecoProduto = new javax.swing.JTextField();
         Pedidos = new javax.swing.JPanel();
-        pesquisaPedidos = new javax.swing.JTextField();
         jLimgLupaPedido = new javax.swing.JLabel();
         jScrollPanePedidos = new javax.swing.JScrollPane();
         jTpedido = new javax.swing.JTable();
         jBnovoPedido = new javax.swing.JButton();
+        jLabelprocurepeladata = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jBbuscarPedidosPorData = new javax.swing.JButton();
+        jTpesquisaData2 = new javax.swing.JFormattedTextField();
+        jTpesquisaData1 = new javax.swing.JFormattedTextField();
         CadastroDePedidos = new javax.swing.JPanel();
         jLabelCadastroDePedidos = new javax.swing.JLabel();
         jidpedido = new javax.swing.JLabel();
@@ -562,6 +570,29 @@ public class FormCliente extends javax.swing.JFrame {
             }
         });
 
+        jLabelprocurepeladata.setText("Procure os pedidos pela data:");
+
+        jLabel2.setText("Até:");
+
+        jBbuscarPedidosPorData.setText("Buscar");
+        jBbuscarPedidosPorData.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBbuscarPedidosPorDataActionPerformed(evt);
+            }
+        });
+
+        try {
+            jTpesquisaData2.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##/##/####")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
+
+        try {
+            jTpesquisaData1.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##/##/####")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
+
         javax.swing.GroupLayout PedidosLayout = new javax.swing.GroupLayout(Pedidos);
         Pedidos.setLayout(PedidosLayout);
         PedidosLayout.setHorizontalGroup(
@@ -569,26 +600,43 @@ public class FormCliente extends javax.swing.JFrame {
             .addGroup(PedidosLayout.createSequentialGroup()
                 .addGap(37, 37, 37)
                 .addGroup(PedidosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPanePedidos, javax.swing.GroupLayout.PREFERRED_SIZE, 610, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(PedidosLayout.createSequentialGroup()
-                        .addComponent(jLimgLupaPedido)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(pesquisaPedidos, javax.swing.GroupLayout.PREFERRED_SIZE, 310, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jBnovoPedido, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(146, Short.MAX_VALUE))
+                        .addComponent(jBnovoPedido, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(PedidosLayout.createSequentialGroup()
+                        .addGroup(PedidosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addGroup(PedidosLayout.createSequentialGroup()
+                                .addComponent(jLimgLupaPedido)
+                                .addGap(18, 18, 18)
+                                .addComponent(jLabelprocurepeladata)
+                                .addGap(18, 18, 18)
+                                .addComponent(jTpesquisaData1, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(13, 13, 13)
+                                .addComponent(jLabel2)
+                                .addGap(18, 18, 18)
+                                .addComponent(jTpesquisaData2, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jBbuscarPedidosPorData, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jScrollPanePedidos, javax.swing.GroupLayout.PREFERRED_SIZE, 610, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addContainerGap(146, Short.MAX_VALUE))))
         );
         PedidosLayout.setVerticalGroup(
             PedidosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(PedidosLayout.createSequentialGroup()
-                .addGap(15, 15, 15)
+                .addGap(14, 14, 14)
                 .addGroup(PedidosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLimgLupaPedido, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(pesquisaPedidos, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(PedidosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabelprocurepeladata)
+                        .addComponent(jLabel2)
+                        .addComponent(jBbuscarPedidosPorData, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jTpesquisaData2, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jTpesquisaData1, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPanePedidos, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(26, 26, 26)
+                .addGap(32, 32, 32)
                 .addComponent(jBnovoPedido, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(107, Short.MAX_VALUE))
+                .addContainerGap(96, Short.MAX_VALUE))
         );
 
         Abas.addTab("Pedidos", Pedidos);
@@ -830,7 +878,7 @@ public class FormCliente extends javax.swing.JFrame {
         }
         c.setNome(jTFnomeCliente.getText());
         if (jTFnomeCliente.getText().isEmpty()) {
-            JOptionPane.showMessageDialog(rootPane, "Necessário informar nome");
+            JOptionPane.showMessageDialog(rootPane, "Necessário informar o nome");
         } else {
             c.setCpfcnpj(jFcpfcnpjCliente.getText());
             c.setEndereco(jTFenderecoCliente.getText());
@@ -976,7 +1024,7 @@ public class FormCliente extends javax.swing.JFrame {
 
         i.setPreco(Double.parseDouble(jTprecoProduto.getText()));
         if (jTdescricaoProduto.getText().isEmpty()) {
-            JOptionPane.showMessageDialog(rootPane, "Precisa colocar o item!");
+            JOptionPane.showMessageDialog(rootPane, "Necessário informar o produto");
         } else {
             idao.saveOrUpdate(i);
             preencherTabelaItem();
@@ -997,23 +1045,47 @@ public class FormCliente extends javax.swing.JFrame {
 
     private void jBgravarPedidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBgravarPedidoActionPerformed
         try {
+            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
             Pedido p = new Pedido();
             Cliente c = new Cliente();
-            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+            Item i = new Item();
+            ItemPedido itPe = new ItemPedido();
             PedidoDAO pdao = new PedidoDAO();
+            ItemPedidoDAO itPeDao = new ItemPedidoDAO();
+
             if (!"".equals(jTidPedido.getText())) {
                 p.setId(Integer.parseInt(jTidPedido.getText()));
+                itPe.setId(Integer.parseInt(jTidPedido.getText()));
             }
             p.setData(sdf.parse(jTdataPedido.getText()));
+
             c = (Cliente) jcbClientes.getSelectedItem();
             p.setCliente(c);
             pdao.saveOrUpdate(p);
+
+            if (!"".equals(jTFqtdeItPe.getText())) {
+                i = (Item) jcbProdutos.getSelectedItem();
+                itPe.setItem(i);
+                itPe.setQtde(Integer.parseInt(jTFqtdeItPe.getText()));
+                jTprecoItPe.setText(String.valueOf(i.getPreco()));
+                itPe.setPrecoVenda((itPe.getQtde() * i.getPreco()));
+                itPe.setPedido(p);
+                itPeDao.saveOrUpdate(itPe);
+            } else {
+                JOptionPane.showMessageDialog(rootPane, "Não foi cadastrado um item de pedido por falta de informações");
+            }
             preencherTabelaPedido();
             Abas.setSelectedIndex(4);
             jTidPedido.setText("");
             jTdataPedido.setText("");
+            jcbClientes.setSelectedIndex(-1);
+            jcbProdutos.setSelectedIndex(-1);
+            jTFqtdeItPe.setText("");
+            jTprecoItPe.setText("");
         } catch (ParseException ex) {
-            JOptionPane.showMessageDialog(rootPane, "Ocorreu um erro no cadastro");
+            JOptionPane.showMessageDialog(rootPane, "Necessário informar a data");
+        } catch (SQLException ex) {
+            Logger.getLogger(FormCliente.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_jBgravarPedidoActionPerformed
 
@@ -1034,6 +1106,7 @@ public class FormCliente extends javax.swing.JFrame {
             Abas.setSelectedIndex(4);
             jTidPedido.setText("");
             jTdataPedido.setText("");
+            jcbClientes.setSelectedIndex(-1);
         }
     }//GEN-LAST:event_jBexcluirPedidoActionPerformed
 
@@ -1084,12 +1157,11 @@ public class FormCliente extends javax.swing.JFrame {
         ItemDAO idao = new ItemDAO();
         List<Item> listaDeProdutos = idao.listarTodos();
         jcbProdutos.removeAllItems();
-        
+
         for (Item i : listaDeProdutos) {
             jcbProdutos.addItem(i);
         }
     }
-
 
     private void jBnovoPedidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBnovoPedidoActionPerformed
         Abas.setSelectedIndex(5);
@@ -1115,6 +1187,30 @@ public class FormCliente extends javax.swing.JFrame {
     private void jTprecoItPeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTprecoItPeActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTprecoItPeActionPerformed
+
+    private void jBbuscarPedidosPorDataActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBbuscarPedidosPorDataActionPerformed
+        ItemPedidoDAO itPeDAO = new ItemPedidoDAO();
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        Date a = null;
+        try {
+            a = sdf.parse(jTpesquisaData1.getText());
+        } catch (ParseException ex) {
+            Logger.getLogger(FormCliente.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        Date b = null;
+        try {
+            b = sdf.parse(jTpesquisaData2.getText());
+        } catch (ParseException ex) {
+            Logger.getLogger(FormCliente.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        List<ItemPedido> acharPelaData = itPeDAO.acharPelaData(a, b);
+        DefaultTableModel modeloTabelaPedido = (DefaultTableModel) jTpedido.getModel();
+        modeloTabelaPedido.setRowCount(0);
+        for (ItemPedido itPe : acharPelaData) {
+            modeloTabelaPedido.addRow(new Object[]{itPe.getPedido().getId(), sdf.format(itPe.getPedido().getData()), itPe.getPedido().getCliente()});
+        }
+    }//GEN-LAST:event_jBbuscarPedidosPorDataActionPerformed
 
     public void preencherTabelaCliente() {
         ClienteDAO cdao = new ClienteDAO();
@@ -1165,6 +1261,7 @@ public class FormCliente extends javax.swing.JFrame {
     private javax.swing.JPanel Produtos;
     private javax.swing.JRadioButton campoCNPJ;
     private javax.swing.JRadioButton campoCPF;
+    private javax.swing.JButton jBbuscarPedidosPorData;
     private javax.swing.JButton jBcancelarCliente;
     private javax.swing.JButton jBcancelarPedido;
     private javax.swing.JButton jBcancelarProduto;
@@ -1179,9 +1276,11 @@ public class FormCliente extends javax.swing.JFrame {
     private javax.swing.JButton jBnovoProduto;
     private javax.swing.JFormattedTextField jFcpfcnpjCliente;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabelCadastroDeItens;
     private javax.swing.JLabel jLabelCadastroDePedidos;
+    private javax.swing.JLabel jLabelprocurepeladata;
     private javax.swing.JLabel jLimgLupaCliente;
     private javax.swing.JLabel jLimgLupaPedido;
     private javax.swing.JLabel jLimgLupaProduto;
@@ -1200,6 +1299,8 @@ public class FormCliente extends javax.swing.JFrame {
     private javax.swing.JTextField jTidPedido;
     private javax.swing.JTextField jTidProduto;
     private javax.swing.JTable jTpedido;
+    private javax.swing.JFormattedTextField jTpesquisaData1;
+    private javax.swing.JFormattedTextField jTpesquisaData2;
     private javax.swing.JTextField jTprecoItPe;
     private javax.swing.JTextField jTprecoProduto;
     private javax.swing.JTable jTproduto;
@@ -1220,7 +1321,6 @@ public class FormCliente extends javax.swing.JFrame {
     private javax.swing.JLabel jprecoproduto;
     private javax.swing.JLabel jtipo;
     private javax.swing.JTextField pesquisaClientes;
-    private javax.swing.JTextField pesquisaPedidos;
     private javax.swing.JTextField pesquisaProdutos;
     // End of variables declaration//GEN-END:variables
 }

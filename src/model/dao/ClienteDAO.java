@@ -5,8 +5,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import javax.swing.JOptionPane;
 import controle.Cliente;
-import java.util.ArrayList;
-import java.util.List;
 import db.Conectar;
 import java.util.HashSet;
 import java.util.Set;

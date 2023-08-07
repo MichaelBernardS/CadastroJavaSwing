@@ -4,6 +4,7 @@ import controle.Cliente;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.Statement;
 import javax.swing.JOptionPane;
 import controle.Pedido;
 import java.util.ArrayList;
@@ -15,18 +16,26 @@ import java.util.Map;
 
 public class PedidoDAO {
 
-    public void cadastrar(Pedido p) {
+    public void cadastrar(Pedido p) throws java.sql.SQLException {
         Connection con = Conectar.getConectar();
         String sql = "INSERT INTO pedido (data, id_cliente) VALUES (?,?) ";
-        try (PreparedStatement smt = con.prepareStatement(sql)) {
+        try (PreparedStatement smt = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             smt.setDate(1, new java.sql.Date(p.getData().getTime()));
             smt.setInt(2, p.getCliente().getId());
-            smt.executeUpdate();
-            smt.close();
-            con.close();
-            JOptionPane.showMessageDialog(null, "Cadastrado com sucesso!");
-        } catch (Exception ex) {
-            JOptionPane.showMessageDialog(null, "Erro ao cadastrar o pedido!");
+
+            int rowsAffected = smt.executeUpdate();
+
+            if (rowsAffected > 0) { // Testando se as linhas alteradas foram maior que 0;
+                ResultSet rs = smt.getGeneratedKeys();
+                if (rs.next()) {// if pois estamos inserindo apenas um dado;
+                    int id = rs.getInt(1); // Se existir, pegar o id gerado;
+                    p.setId(id); // E atribuir dentro do objeto obj
+                }
+                JOptionPane.showMessageDialog(null, "Pedido foi cadastrado!");
+            } else {
+                JOptionPane.showMessageDialog(null, "Erro ao cadastrar o pedido!");
+                con.close();
+            }
         }
     }
 
@@ -48,7 +57,7 @@ public class PedidoDAO {
         }
     }
 
-    public void saveOrUpdate(Pedido pedido) {
+    public void saveOrUpdate(Pedido pedido) throws java.sql.SQLException {
         if (pedido.getId() == null) {
             cadastrar(pedido);
         } else {

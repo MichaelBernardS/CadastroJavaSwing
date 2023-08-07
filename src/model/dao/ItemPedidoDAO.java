@@ -10,6 +10,7 @@ import java.sql.ResultSet;
 import javax.swing.JOptionPane;
 import controle.ItemPedido;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -18,7 +19,7 @@ public class ItemPedidoDAO {
 
     public void cadastrar(ItemPedido itPe) {
         Connection con = Conectar.getConectar();
-        String sql = "INSERT INTO itempedido (Qtde, PrecoVenda), Id_Pedido, Id_Item VALUES (?,?,?,?) ";
+        String sql = "INSERT INTO itempedido (Qtde, PrecoVenda, Id_Pedido, Id_Item) VALUES (?,?,?,?) ";
         try (PreparedStatement smt = con.prepareStatement(sql)) {
             smt.setInt(1, itPe.getQtde());
             smt.setDouble(2, itPe.getPrecoVenda());
@@ -27,9 +28,9 @@ public class ItemPedidoDAO {
             smt.executeUpdate();
             smt.close();
             con.close();
-            JOptionPane.showMessageDialog(null, "Cadastrado com sucesso!");
+            JOptionPane.showMessageDialog(null, "Item de pedido foi cadastrado!");
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(null, "Erro ao cadastrar o pedido!");
+            JOptionPane.showMessageDialog(null, "Erro ao cadastrar o item de pedido!");
         }
     }
 
@@ -84,6 +85,33 @@ public class ItemPedidoDAO {
         Set<ItemPedido> lista = new HashSet<>();
         String sql = "SELECT * FROM itempedido ORDER BY id ";
         try (PreparedStatement smt = con.prepareStatement(sql)) {
+            ResultSet rs = smt.executeQuery();
+            while (rs.next()) {
+                Cliente cl = instantiateCliente(rs);
+                Item it = instantiateItem(rs);
+                Pedido ped = instantiatePedido(rs, cl);
+                ItemPedido itPe = instantiateItemPedido(rs, ped, it);
+                lista.add(itPe);
+            }
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, "Erro ao buscar os registros");
+        }
+        return lista;
+    }
+
+    public List<ItemPedido> acharPelaData(Date dataInicio, Date dataFinal) {
+        Connection con = Conectar.getConectar();
+        List<ItemPedido> lista = new ArrayList<>();
+        String sql = "SELECT pedido.Id as PedId, pedido.Data as PedData, itempedido.Id as Id, cliente.Id as IdCliente, cliente.Nome as ClNome, cliente.cpfcnpj as ClCpfcnpj, cliente.endereco as ClEndereco, item.Id as ItId, item.Descricao as ItDescricao,item.Preco as ItPreco, itempedido.Qtde as Qtde, itempedido.PrecoVenda as PrecoVenda "
+                + "FROM itempedido "
+                + "INNER JOIN pedido ON pedido.Id = itempedido.Id_Pedido "
+                + "INNER JOIN item ON item.Id = itempedido.Id_Item "
+                + "INNER JOIN cliente ON cliente.Id = pedido.Id_Cliente "
+                + "WHERE pedido.Data between ? and ? "
+                + "ORDER BY pedido.Data ";
+        try (PreparedStatement smt = con.prepareStatement(sql)) {
+            smt.setDate(1, new java.sql.Date(dataInicio.getTime()));
+            smt.setDate(2, new java.sql.Date(dataFinal.getTime()));
             ResultSet rs = smt.executeQuery();
             while (rs.next()) {
                 Cliente cl = instantiateCliente(rs);
