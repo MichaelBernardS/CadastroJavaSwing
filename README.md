@@ -1,4 +1,4 @@
-# Tela de cadastro de Clientes utilizando o Swing do Java
+# Sistema de cadastro utilizando o Swing do Java
 [![NPM](https://img.shields.io/badge/license-MIT-green)](https://github.com/MichaelBernardS/workshop-spring3-jpa/blob/main/LICENSE)
 
 # Sobre o projeto
