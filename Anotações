@@ -1,0 +1,2 @@
+Painel com guias - Onde ocorre essa transição de tela.
+Máscara de formatação de CPF: Botão direito no campo > Propriedades > formatterFactory > máscara > personalizado > ###.###.###-##
